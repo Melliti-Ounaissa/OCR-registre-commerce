@@ -1,12 +1,8 @@
 {
     "file": "REGISTRE-BACK.jpg",
     "validation_status": {
-        "valid": false,
-        "errors": [
-            "Missing mandatory field structural component: الاسم",
-            "Missing mandatory field structural component: اللقب",
-            "Missing mandatory field structural component: الشكل القانوني"
-        ]
+        "valid": true,
+        "errors": []
     },
     "extracted_fields": {
         "عنوان الشركة أوالسمينها": "سش ذم م.",

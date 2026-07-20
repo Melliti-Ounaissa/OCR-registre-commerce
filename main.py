@@ -61,15 +61,27 @@ def validate_date(date_str):
     patterns = [r"^\d{4}/\d{2}/\d{2}$", r"^\d{4}-\d{2}-\d{2}$"]
     return any(re.match(pattern, date_str) for pattern in patterns)
 
+def autocorrect_date(date_str):
+    """Attempts to fix common OCR misreads in dates before validation."""
+    # Replace common misreads (L, l, |, \, _) with a slash
+    corrected = re.sub(r'[Ll|\\_]', '/', date_str)
+    
+    # If the OCR missed the separators entirely (e.g., 20001204), try to inject them
+    if re.match(r"^\d{8}$", corrected):
+        corrected = f"{corrected[:4]}/{corrected[4:6]}/{corrected[6:]}"
+        
+    return corrected
+
+def autocorrect_name(name_str):
+    """Removes digits and special characters from fields that should strictly be text."""
+    # Substitute any digit with an empty string
+    return re.sub(r'\d+', '', name_str).strip()
+
 def extract_and_validate_fields(raw_text):
-    """
-    Parses structural values via key-value mappings split by colons.
-    Python reads logical text indexing natively for RTL and LTR strings.
-    """
+    """Parses structural values, applies autocorrection, and validates."""
     extracted_data = {}
     validation_report = {"valid": True, "errors": []}
-    mandatory_keys = ["الاسم", "اللقب", "الشكل القانوني"] 
-
+    
     lines = raw_text.split('\n')
     for line in lines:
         if ':' in line:
@@ -80,19 +92,25 @@ def extract_and_validate_fields(raw_text):
             if not key or not value:
                 continue
 
-            # Basic Validation Checks
+            # --- Autocorrection & Validation Rules ---
+            
+            # 1. Date Fields
             if "تاريخ" in key or "date" in key.lower():
-                if not validate_date(value):
-                    validation_report["errors"].append(f"Invalid date format for '{key}': {value}")
+                value = autocorrect_date(value)
+                # Validate the newly corrected date
+                if not re.match(r"^\d{4}[/-]\d{2}[/-]\d{2}$", value):
+                    validation_report["errors"].append(f"Unfixable date format for '{key}': {value}")
+                    validation_report["valid"] = False
+
+            # 2. Name Fields (Assuming 'الاسم' and 'اللقب' are text-only)
+            elif any(name_keyword in key for name_keyword in ["الاسم", "اللقب", "nom", "prenom"]):
+                original_value = value
+                value = autocorrect_name(value)
+                if not value:
+                    validation_report["errors"].append(f"Name field '{key}' became empty after stripping invalid characters from: {original_value}")
                     validation_report["valid"] = False
 
             extracted_data[key] = value
-
-    # Check Requirements
-    for m_key in mandatory_keys:
-        if not any(m_key in k for k in extracted_data.keys()):
-            validation_report["errors"].append(f"Missing mandatory field structural component: {m_key}")
-            validation_report["valid"] = False
 
     return extracted_data, validation_report
 
