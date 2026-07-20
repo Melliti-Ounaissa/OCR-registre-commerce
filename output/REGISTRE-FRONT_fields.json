@@ -1,0 +1,14 @@
+{
+    "file": "REGISTRE-FRONT.png",
+    "validation_status": {
+        "valid": false,
+        "errors": [
+            "Missing mandatory field structural component: الاسم",
+            "Missing mandatory field structural component: اللقب",
+            "Missing mandatory field structural component: الشكل القانوني"
+        ]
+    },
+    "extracted_fields": {
+        "ل لأحكام المراد 31.31 مكرر. 32. 37 34. 33 35 مكرر. ‎II IG‏ 38, 43.48": "39 و41 مكرر من اندالون المذكرر ‎CNRÉ‏ ."
+    }
+}

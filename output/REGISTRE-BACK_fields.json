@@ -1,0 +1,17 @@
+{
+    "file": "REGISTRE-BACK.jpg",
+    "validation_status": {
+        "valid": false,
+        "errors": [
+            "Missing mandatory field structural component: الاسم",
+            "Missing mandatory field structural component: اللقب",
+            "Missing mandatory field structural component: الشكل القانوني"
+        ]
+    },
+    "extracted_fields": {
+        "عنوان الشركة أوالسمينها": "سش ذم م.",
+        "الدكل النانوتي": "مسشركة ذات المسؤولبة المحدودة.",
+        "ولاية التواجذ": "ب الجزااه",
+        "مبلغ رأسمال الشركة": "-100.000,00دج."
+    }
+}
