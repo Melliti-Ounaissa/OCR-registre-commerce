@@ -1,8 +1,16 @@
 {
     "file": "REGISTRE-FRONT.png",
+    "processing_time_seconds": 16.19,
     "validation_status": {
         "valid": true,
         "errors": []
     },
-    "extracted_fields": {}
+    "extracted_fields": {
+        "رقم السجل": "",
+        "تاريخ السجل في السجل التجاري": "",
+        "إمضاء القاضي للتسجيل أو ممثله الشرعي": "",
+        "إمضاء المأمور": "",
+        "التاريخ": "",
+        "الرقم التسلسلي": ""
+    }
 }
