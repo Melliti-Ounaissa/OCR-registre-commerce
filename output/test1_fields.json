@@ -1,0 +1,43 @@
+{
+    "file": "test1.png",
+    "processing_time_seconds": 30.25,
+    "validation_status": {
+        "valid": true,
+        "errors": []
+    },
+    "extracted_fields": {
+        "قطاع النشاط": "خدمات",
+        "النشاط أو الأنشطة الممارسة": "International Freight Transport\nLogistics and Warehousing\nCustoms Clearance Services\nDistribution of Goods",
+        "رمز أو رموز النشاط": "604298",
+        "عنوان الشركة أو تسمية": "ELITE LOGISTICS S.P.A",
+        "الشكل القانوني": "Joint Stock Company",
+        "عنوان مقر الشركة": "Lot N° 15, Zone Industrielle, Rouïba, Alger",
+        "ولاية التواجد": "Alger",
+        "مبلغ رأس مال الشركة": "50,000,000.00",
+        "تاريخ بداية النشاط": "2011/10/01",
+        "ملكية القاعدة التجارية": "إنشاء",
+        "القاعدة القاعدل": "New Registration",
+        "القاعدة المحل": "Owned",
+        "بمجلست المُنتظور الأقصدي القلادمين": "2",
+        "الاسم واللقب": [
+            "Mustapha Benyoucef",
+            "Rachid Haddad"
+        ],
+        "تاريخ ومكان الميلاد": [
+            "1982 Alger",
+            "1979 Blida"
+        ],
+        "العنوان": [
+            "",
+            ""
+        ],
+        "الصفة": [
+            "",
+            ""
+        ],
+        "الجنسية": [
+            "Algerian",
+            "Algerian"
+        ]
+    }
+}
