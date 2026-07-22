@@ -145,24 +145,6 @@ def autocorrect_date(date_str):
 def autocorrect_name(name_str):
     return re.sub(r'\d+', '', name_str).strip()
 
-# Accepts amounts like: "50,000,000.00", "5,000,000.00 دج", "1,500,000.00 د.ج",
-# "دج 1,500,000.00", "1500000 DZD", "1,500,000.00 dz" (currency optional, before or after)
-AMOUNT_CURRENCY = r'(?:دج|د\.ج|DZD|DA|dz)'
-AMOUNT_NUMBER = r'\d{1,3}(?:,\d{3})*(?:\.\d+)?|\d+(?:\.\d+)?'
-AMOUNT_PATTERN = rf'^{AMOUNT_CURRENCY}?\s*(?:{AMOUNT_NUMBER})\s*{AMOUNT_CURRENCY}?$'
-
-def autocorrect_amount(amount_str):
-    # Normalize common OCR artifacts: Arabic thousand/decimal separators, stray spaces around punctuation
-    corrected = amount_str.strip()
-    corrected = corrected.replace('٬', ',').replace('،', ',')
-    corrected = re.sub(r'\s*\.\s*', '.', corrected)
-    corrected = re.sub(r'\s*,\s*', ',', corrected)
-    corrected = re.sub(r'\s+', ' ', corrected)
-    return corrected
-
-def is_valid_amount(value):
-    return bool(re.match(AMOUNT_PATTERN, value.strip(), re.IGNORECASE))
-
 def validate_and_clean_json(raw_json_str):
     validation_report = {"valid": True, "errors": []}
     try:
@@ -193,11 +175,6 @@ def validate_and_clean_json(raw_json_str):
                 value = autocorrect_name(value)
                 if not value and original_v.strip():
                     validation_report["errors"].append(f"Name field '{key}' became empty after stripping digits.")
-                    validation_report["valid"] = False
-            elif any(word in k_lower for word in ["مبلغ", "رأس مال", "رأسمال", "montant", "capital"]):
-                value = autocorrect_amount(value)
-                if not is_valid_amount(value):
-                    validation_report["errors"].append(f"Invalid amount format for '{key}': {value}")
                     validation_report["valid"] = False
             return value
         elif isinstance(value, dict):
